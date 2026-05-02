@@ -1,0 +1,57 @@
+# Secrets — never commit
+.env
+*.env
+.env.*
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+
+# Distribution / packaging
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual environments
+venv/
+env/
+.venv/
+ENV/
+
+# Data files — too large for git
+data/raw/
+data/processed/
+
+# ML model files — large binary, versioned separately
+ml/saved_models/
+
+# Runtime exports — generated at runtime, not source
+exports/
+
+# IDE
+.vscode/
+.idea/
+*.suo
+*.user
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Jupyter (not used but common in ML projects)
+.ipynb_checkpoints/
+*.ipynb
+
+# Pytest cache
+.pytest_cache/
+htmlcov/
+.coverage
+
+# Logs
+*.log
+logs/

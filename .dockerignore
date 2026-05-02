@@ -1,0 +1,17 @@
+.git
+.gitignore
+.env
+__pycache__/
+*.pyc
+*.pyo
+data/raw/
+data/processed/
+ml/saved_models/
+exports/
+.venv/
+venv/
+env/
+*.egg-info/
+.pytest_cache/
+tests/
+*.log

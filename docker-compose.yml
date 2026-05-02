@@ -1,0 +1,50 @@
+
+
+services:
+  flask-api:
+    build: .
+    container_name: spp_flask_api
+    ports:
+      - "5001:5001"
+    environment:
+      - SUPABASE_URL=${SUPABASE_URL}
+      - SUPABASE_KEY=${SUPABASE_KEY}
+      - FLASK_DEBUG=false
+      - API_BASE_URL=http://localhost:5001
+    volumes:
+      - ./data:/app/data
+      - ./ml/saved_models:/app/ml/saved_models
+      - ./exports:/app/exports
+    command: gunicorn --bind 0.0.0.0:5001 --workers 2 --timeout 120 --access-logfile - --error-logfile - "api.app:app"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c",
+             "import urllib.request; urllib.request.urlopen('http://localhost:5001/api/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+
+  streamlit:
+    build: .
+    container_name: spp_streamlit
+    ports:
+      - "8501:8501"
+    environment:
+      - SUPABASE_URL=${SUPABASE_URL}
+      - SUPABASE_KEY=${SUPABASE_KEY}
+      - API_BASE_URL=http://flask-api:5001
+    volumes:
+      - ./data:/app/data
+      - ./ml/saved_models:/app/ml/saved_models
+      - ./exports:/app/exports
+    command: >
+      streamlit run dashboard/app.py
+      --server.port=8501
+      --server.address=0.0.0.0
+      --server.headless=true
+      --browser.gatherUsageStats=false
+    depends_on:
+      flask-api:
+        condition: service_healthy
+    restart: unless-stopped
