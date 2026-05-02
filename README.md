@@ -16,7 +16,8 @@
 
 ## 🌐 Live Demo
 
-- Dashboard: http://YOUR_EC2_IP:8501
+- Dashboard: http://56.228.35.52:8501
+- API Health Check: http://56.228.35.52:5001/api/health
 - Note: Click **Enter Dashboard** for instant access
 
 ## ✨ Features
